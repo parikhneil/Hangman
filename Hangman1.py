@@ -27,7 +27,7 @@ def CreateUnderscoredWord(EmptyWord):    # creates the blank word, like "_ _ _ _
 
 def get_input():
     RemainingLetters = len(SelectedWord)
-    AttemptsLeft = len(SelectedWord) + 7
+    AttemptsLeft = 12
 
     EmptyWord = ""
     for index in range(0, len(SelectedWord)):
@@ -35,6 +35,9 @@ def get_input():
 
     not_guessed = True 
     while not_guessed:
+        CreateUnderscoredWord(EmptyWord)
+        print(f"You have {AttemptsLeft} turns remaining")
+        print("")
         userInput = input("Enter a letter or 'Exit' if you want to end game: ")
         userInput = userInput.lower()
         if userInput != "exit":
@@ -43,21 +46,20 @@ def get_input():
                     LetterList = CharacterDict[userInput]
                     RemainingLetters = RemainingLetters - 1
                     print(f'{RemainingLetters} letters remaining')                    
-                    CorrectChoices[userInput] = LetterList        
+                    CorrectChoices[userInput] = LetterList
                 else:
+                    print("Letter not correct")
                     WrongChoiceList.append({userInput})
                     AttemptsLeft = AttemptsLeft - 1
-
-                CreateUnderscoredWord(EmptyWord)
-
+                # CreateUnderscoredWord(EmptyWord)
                 if AttemptsLeft != 0 and RemainingLetters != 0:
-                    print(f'WrongChoices: {WrongChoiceList}')
-                    print(f'{AttemptsLeft} turns remaining')
+                    continue
                 elif RemainingLetters == 0:
                     print("Congratulations. You win")
                     not_guessed = False
                 else:
                     print("End of game. You Lose")
+                    print(f"word was {SelectedWord}")
                     not_guessed = False
             else:
                 if userInput == SelectedWord.lower():
@@ -66,12 +68,13 @@ def get_input():
                 else:
                     print("Incorrect")
                     AttemptsLeft -= 1
-                    print(f'{AttemptsLeft} turns remaining')
+                    # print(f'{AttemptsLeft} turns remaining')
             
         else:
             print("End of game.")
             not_guessed = False
 
-print(SelectedWord)
+# print(SelectedWord)
 # CreateUnderscoredWord()
+print(f"It is a {len(SelectedWord)} letter word")
 get_input()
